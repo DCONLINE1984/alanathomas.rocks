@@ -1,0 +1,29 @@
+<form method="post" enctype="multipart/form-data">
+    <div class="row">
+        <div class="col-sm-6 col-md-6">
+            <span style="color:red;">*</span> <label for="username">Please enter your username</label> 
+        </div>
+        <div class="col-sm-6 col-md-6">
+            <input type="text" required name="username" id="username" />
+        </div>
+    </div>
+    <div class="row" style="margin-top:10px;">
+        <div class="col-sm-6 col-md-6">
+            <span style="color:red;">*</span> <label for="password">Please enter your password</label> 
+        </div>
+        <div class="col-sm-6 col-md-6">
+            <input type="password" required name="password" id="password" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-offset-4">
+            <input class="btn btn-lg btn-orange" type="submit" value="Submit" />
+        </div>
+    </div>
+</form>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $("#username").focus();
+});
+</script>

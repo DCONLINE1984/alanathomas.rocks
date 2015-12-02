@@ -1,0 +1,58 @@
+<script type="text/javascript" src="/js/ckeditor/ckeditor.js"></script>
+<script type="text/javascript" src="/ckfinder/ckfinder.js"></script>
+<form method="post" enctype="multipart/form-data">
+    <fieldset>
+        <input type="hidden" name="submitted" value="1" />
+        <div class="row">
+            <div class="col-sm-6 col-md-6">
+                <label for="title">Title</label>
+            </div>
+            <div class="col-sm-6 col-md-6">
+                <input type="text" name="title" id="title" value="<?php print $this->model->getTitle(); ?>" />
+            </div>
+        </div>
+        <div class="row" style="margin-top:10px;">
+            <div class="col-sm-12 col-md-12">
+                <textarea name="body" id="body"><?php print $this->model->getBody(); ?></textarea>
+                <script>
+                //CKEDITOR.replace( 'body' );
+                var editor = CKEDITOR.replace( 'body',
+                    {
+                        filebrowserBrowseUrl : '/ckfinder.html',
+                    });
+                CKFinder.config.rememberLastFolder = false;
+                CKFinder.config.startupPath = "Images:";
+                //CKFinder.setupCKEditor( editor, '../' ) ;
+                </script>
+            </div>
+        </div>
+        <div class="row" style="margin-top:10px;">
+            <div class="col-sm-6 col-md-6">
+                <label for="shortbody">Short Body</label>
+            </div>
+            <div class="col-sm-6 col-md-6">
+                <input type="text" name="shortbody" id="shortbody" value="<?php print $this->model->getBriefBody(); ?>" />
+            </div>
+        </div>
+        <div class="row" style="margin-top:10px;">
+            <div class="col-sm-6 col-md-6">
+                <label for="titleimage">Title Image</label>
+            </div>
+            <div class="col-sm-6 col-md-6">
+                <input type="text" name="titleimage" id="titleimage" value="<?php print $this->model->getTitleImage(); ?>" />
+            </div>
+        </div>
+        <div class="row">
+            <input class="btn btn-lg btn-orange col-md-offset-3" type="submit" value="Submit" />
+        </div>
+    </fieldset>
+</form>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    setTimeout(function(){
+       $(".nav li").attr("class", "");  
+       $("#blogNav").attr("class", "active"); 
+    }, 0);
+});
+</script>

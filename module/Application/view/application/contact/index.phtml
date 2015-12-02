@@ -1,0 +1,98 @@
+<link rel="stylesheet" type="text/css" href="/js/qaptcha/jquery/QapTcha.jquery.css" media="screen" />
+<script type="text/javascript" src="/js/qaptcha/jquery/QapTcha.jquery.js"></script>
+
+<div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 contact-left">
+                <div id="map-canvas"></div>
+                <style>
+                    #map-canvas {
+                      width: 100%;
+                      height: 470px;
+                    }
+                </style>
+                <script src="https://maps.googleapis.com/maps/api/js"></script>
+                <script>
+                function initialize() {
+                  var mapCanvas = document.getElementById('map-canvas');
+                  var myLatlng = new google.maps.LatLng(39.5983806, -104.87299919999998);
+                  var mapOptions = {
+                    center: myLatlng,
+                    zoom: 14,
+                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                  }
+                  var map = new google.maps.Map(mapCanvas, mapOptions);
+                  var marker = new google.maps.Marker({
+                    position: myLatlng,
+                    map: map,
+                    title: 'Me!'
+                  });
+                }
+                google.maps.event.addDomListener(window, 'load', initialize);
+                </script>
+            </div>
+            <div class="col-md-4 contact_right">
+                <p>Feel free to send me any questions.</p>
+                <p><img src="/template/images/location.png" alt="icon 1" /> DTC, Denver, CO</p>
+                <p><img src="/template/images/email.png"  alt="icon 2" /> <a href="mailto:deanrclow@gmail.com" style="color:#e67e22">alanasimonethomas@gmail.com</a></p>
+                <p><img src="/template/images/globe.png" alt="icon 3" /><a class="link_orange" href="http://deanclow.com"><span class="txt_orange"> alanthomas.rocks</span></a></p>
+                <form class="form-horizontal" method="POST">
+                    <div class="form-group">
+                        <input type="text" name="name" id="name" required class="form-control" placeholder="Your Name..." maxlength="40" />
+                    </div>
+                    <div class="form-group">
+                        <input type="email" name="email" id="email" required class="form-control" placeholder="Your Email..." maxlength="40" />
+                    </div>
+                    <div class="form-group">
+                        <textarea name="body" id="body" required class="form-control" style="height: 130px;" placeholder="Write down your message..."></textarea>
+                    </div>
+                    <div class="clr"></div>
+                    <div class="QapTcha" style="margin-top:-5px;"></div>
+                    <input type="submit" name="submit" id="submit" class="btn btn-orange pull-right" style="margin-top:10px;" value="SEND" />
+                </form>
+
+            </div>
+        </div><!-- /.row -->
+    </div><!-- /.container -->
+</div><!-- /#templatemo-contact -->
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('.QapTcha').QapTcha({
+      autoSubmit : false,
+      autoRevert : true,
+      PHPfile : '/contact/captcha',
+      txtLock : "Please use the slider to show you're human!",
+      txtUnlock : "Thank you, you can submit now",
+      disabledSubmit : true
+    });
+    
+    setTimeout(function(){
+       $(".nav li").attr("class", "");  
+       $("#contactNav").attr("class", "active");
+       
+       <?php
+       if($this->sent){
+            print '$("#basicModal").modal(\'show\');setTimeout(function(){$("#basicModal").modal(\'hide\');}, 3000);';
+       }
+       ?>
+    }, 0);
+});
+</script>
+
+<div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h4 class="modal-title" id="myModalLabel">SUCCESS</h4>
+            </div>
+            <div class="modal-body">
+                <h3>Your email has been sent! Thank you!</h3>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Ok</button>
+        </div>
+    </div>
+  </div>
+</div>

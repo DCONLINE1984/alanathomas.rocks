@@ -1,0 +1,51 @@
+<a href="<?php print $_SERVER['HTTP_REFERER']; ?>">Back</a>
+<div class="blog_box">
+    <?php
+    $oDate = new DateTime($this->post['date']);
+    $sDate = $oDate->format("d M Y");
+    $count = 1;
+    $columnWidth = 12;
+    print  '<div class="col-sm-5 col-md-12 blog_post">
+                <ul class="list-inline">';
+                    if(strtolower($this->post['titleImage'])!='no image'){
+                        $columnWidth = 10;
+                        print '<li class="col-md-2">
+                                    <a href="#">
+                                        <img class="img-responsive" src="'.$this->post['titleImage'].'" alt="gallery 1" />
+                                    </a>
+                                </li>';
+                    }
+                    
+                    print '<li  class="col-md-'.$columnWidth.'">
+                        <div class="pull-left">
+                            <span class="blog_header">'.$this->post['title'].'</span><br/>
+                            <span>
+                                <img style="width:12px;height:12px;" src="/img/thumbs_up.ico" /> '.$this->post['upVotes'].'
+                                &nbsp;&nbsp;<img style="width:12px;height:12px;" src="/img/thumbs_down.ico" /> '.$this->post['downVotes'].'
+                            </span>
+                        </div>
+                        <div class="pull-right">
+                            <a class="btn btn-orange" href="/blog-post/show/'.$this->post['id'].'" role="button">'.$sDate.'</a>
+                        </div>
+                        <div class="clearfix"> </div>
+                        <p class="blog_text">
+                            '.$this->post['body'].'
+                        </p>
+                    </li>
+                </ul>
+            </div> <!-- /.blog_post 1 -->';
+    if($count%2==0){
+        print '<div class="templatemo_clear"></div>';
+    }
+    $count++;        
+    ?>
+</div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    setTimeout(function(){
+       $(".nav li").attr("class", "");  
+       $("#blogNav").attr("class", "active"); 
+    }, 0);
+});
+</script>
