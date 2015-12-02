@@ -2,6 +2,20 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/www/alanathomas.rocks/config/autoload/local.php</file>
+            <file>file:/C:/www/alanathomas.rocks/module/Application/config/module.config.php</file>
+            <file>file:/C:/www/alanathomas.rocks/README.md</file>
+            <file>file:/C:/www/alanathomas.rocks/module/Application/view/application/contact/index.phtml</file>
+            <file>file:/C:/www/alanathomas.rocks/config/autoload/global.php</file>
+            <file>file:/C:/www/alanathomas.rocks/module/Application/view/application/about/index.phtml</file>
+            <file>file:/C:/www/alanathomas.rocks/config/application.config.php</file>
+            <file>file:/C:/www/alanathomas.rocks/module/Application/view/application/resume/index.phtml</file>
+            <file>file:/C:/www/alanathomas.rocks/module/Application/config/module.acl.roles.php</file>
+            <file>file:/C:/www/alanathomas.rocks/module/Application/src/Application/Controller/ContactController.php</file>
+            <file>file:/C:/www/alanathomas.rocks/module/Application/view/application/index/index.phtml</file>
+            <file>file:/C:/www/alanathomas.rocks/module/Application/view/layout/main.phtml</file>
+            <file>file:/C:/www/alanathomas.rocks/module/Application/view/layout/layout.phtml</file>
+        </group>
     </open-files>
 </project-private>
