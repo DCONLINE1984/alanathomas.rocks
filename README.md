@@ -1,6 +1,6 @@
-deanclow.com
+alanathomas.rocks
 =======================
 
 Introduction
 ------------
-The personal web-site of Dean Clow.
+The personal web-site of Alana Thomas.
