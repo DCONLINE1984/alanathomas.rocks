@@ -1,14 +1,31 @@
 <script type="text/javascript" src="/js/ckeditor/ckeditor.js"></script>
 <script type="text/javascript" src="/ckfinder/ckfinder.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 <form method="post" enctype="multipart/form-data">
     <fieldset>
         <input type="hidden" name="submitted" value="1" />
         <div class="row">
             <div class="col-sm-6 col-md-6">
-                <label for="title">Title</label>
+                <label for="title"><span style="color:red;">*</span> Title</label>
             </div>
             <div class="col-sm-6 col-md-6">
-                <input type="text" name="title" id="title" value="<?php print $this->model->getTitle(); ?>" />
+                <input type="text" name="title" required style="width:100%;"  id="title" value="<?php print $this->model->getTitle(); ?>" />
+            </div>
+        </div>
+        <div class="row" style="margin-top:10px;">
+            <div class="col-sm-6 col-md-6">
+                <label for="title">Tags (comma separated)</label>
+            </div>
+            <div class="col-sm-6 col-md-6">
+                <input type="text" name="tags" style="width:100%;" id="tags" value="<?php print $this->model->getTags(); ?>" />
+            </div>
+        </div>
+        <div class="row" style="margin-top:10px;">
+            <div class="col-sm-6 col-md-6">
+                <label for="title"><span style="color:red;">*</span> Date</label>
+            </div>
+            <div class="col-sm-6 col-md-6">
+                <input type="text" name="date" id="date" required value="<?php print $this->model->getDate(); ?>" />
             </div>
         </div>
         <div class="row" style="margin-top:10px;">
@@ -27,22 +44,6 @@
             </div>
         </div>
         <div class="row" style="margin-top:10px;">
-            <div class="col-sm-6 col-md-6">
-                <label for="shortbody">Short Body</label>
-            </div>
-            <div class="col-sm-6 col-md-6">
-                <input type="text" name="shortbody" id="shortbody" value="<?php print $this->model->getBriefBody(); ?>" />
-            </div>
-        </div>
-        <div class="row" style="margin-top:10px;">
-            <div class="col-sm-6 col-md-6">
-                <label for="titleimage">Title Image</label>
-            </div>
-            <div class="col-sm-6 col-md-6">
-                <input type="text" name="titleimage" id="titleimage" value="<?php print $this->model->getTitleImage(); ?>" />
-            </div>
-        </div>
-        <div class="row">
             <input class="btn btn-lg btn-orange col-md-offset-3" type="submit" value="Submit" />
         </div>
     </fieldset>
@@ -56,3 +57,10 @@ $(document).ready(function() {
     }, 0);
 });
 </script>
+<script>
+  $(function() {
+    $( "#date" ).datepicker({
+        "dateFormat": 'mm/dd/yy'
+    });
+  });
+  </script>

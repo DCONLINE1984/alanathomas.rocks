@@ -134,7 +134,7 @@ abstract class CommonService implements ServiceLocatorAwareInterface
     public function insert($obj)
     {
         $insert = $this->getDb()->insert($this->table);
-        $values = $obj->toArray($results);
+        $values = $obj->toArray();
         $values = $this->getEncoder()->map($values);
         unset($values[$this->primaryKey]);
         $insert->values($values);
@@ -166,7 +166,7 @@ abstract class CommonService implements ServiceLocatorAwareInterface
     public function update($obj)
     {
         $insert = $this->getDb()->update($this->table);
-        $values = $obj->toArray($results);
+        $values = $obj->toArray();
         $values = $this->getEncoder()->map($values);
         $insert->where(array($this->primaryKey => $values[$this->primaryKey]));
         unset($values[$this->primaryKey]);
@@ -185,7 +185,8 @@ abstract class CommonService implements ServiceLocatorAwareInterface
      */
     public function fetchAll($where=array(),
                              $order=null,
-                             $ignoreEncode=false)
+                             $ignoreEncode=false,
+                             $limit=0)
     {  
         $select = $this->getDb()->select($this->table);
         if(!is_null($where) && !empty($where)){
@@ -195,6 +196,9 @@ abstract class CommonService implements ServiceLocatorAwareInterface
             $select->order($order);
         }else{
             $select->order($this->getPrimaryKey());
+        }
+        if($limit){
+            $select->limit($limit);
         }
         $statement = $this->getDb()->prepareStatementForSqlObject($select);
         $results = $statement->execute();

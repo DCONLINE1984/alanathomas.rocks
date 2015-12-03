@@ -25,12 +25,6 @@ class BlogPost extends CommonModel
     protected $downVotes = 0;
     
     /**
-     * Holds the url to the title image
-     * @var string
-     */
-    protected $titleImage = "/template/images/blog-image-1.jpg";
-    
-    /**
      * Holds the title of the blog post
      * @var string 
      */
@@ -55,10 +49,10 @@ class BlogPost extends CommonModel
     protected $date;
     
     /**
-     * Holds the brief body
-     * @var string
+     * Holds the tags
+     * @var String
      */
-    protected $briefBody;
+    protected $tags      = "";
     
     /**
      * Set the title
@@ -138,27 +132,7 @@ class BlogPost extends CommonModel
     public function getDate()
     {
         $date = new \DateTime($this->date);
-        return $date->format('d M Y');
-    }
-    
-    /**
-     * Set the brief body
-     * @param  string $body
-     * @return \Application\Model\BlogPost
-     */
-    public function setBriefBody($body)
-    {
-        $this->briefBody = $body;
-        return $this;
-    }
-    
-    /**
-     * Get the brief body
-     * @return string
-     */
-    public function getBriefBody()
-    {
-        return $this->briefBody;
+        return $date->format('m/d/Y');
     }
     
     /**
@@ -202,22 +176,22 @@ class BlogPost extends CommonModel
     }
     
     /**
-     * Set the title image url
-     * @param  string $url
+     * Set the tags
+     * @param  string $str
      * @return \Application\Model\BlogPost
      */
-    public function setTitleImage($url)
+    public function setTags($str)
     {
-        $this->titleImage = $url;
+        $this->tags = $str;
         return $this;
     }
     
     /**
-     * Get the title image url
+     * Get the tags
      * @return string
      */
-    public function getTitleImage()
+    public function getTags()
     {
-        return $this->titleImage;
+        return $this->tags;
     }
 }

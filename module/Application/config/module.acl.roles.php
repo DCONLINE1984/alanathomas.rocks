@@ -13,6 +13,7 @@ return array(
         'blog-post/page',
         'blog-post/up-vote',
         'blog-post/down-vote',
+        'blog-post/load-post',
         'contact/index',
         'contact/captcha'
     ),

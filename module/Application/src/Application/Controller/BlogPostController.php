@@ -25,16 +25,11 @@ class BlogPostController extends CommonController
     public function indexAction()
     {
         $service = $this->getServiceLocator()->get("Application\Service\BlogPost");
-        $results = $service->fetchAll(null, 'date DESC');
+        $results = $service->fetchAll(null, 'date DESC', null, 5); //limit 5
         $results = $this->getServiceLocator()->get("Application\Service\BlogComment")->attachComments($results);
-        $paginator = new \Zend\Paginator\Paginator(new
-            \Zend\Paginator\Adapter\ArrayAdapter($results)
-        );
-        $paginator->setCurrentPageNumber($this->params()->fromRoute("id", 1))
-                  ->setItemCountPerPage(8);   
         $view = $this->acceptableViewModelSelector($this->acceptCriteria);
         $view->setVariables(array(
-            'posts' => $paginator
+            'posts' => $results
         ));
         return $view;
     }
@@ -74,13 +69,15 @@ class BlogPostController extends CommonController
                                                 null);
         $model  = new \Application\Model\BlogPost();
         if($isSubmitted){
+            $date = $this->params()->fromPost("date");
+            $date = new \DateTime($date);
+            $date = $date->format('Y-m-d');
             //add a new blog entry
             $model  ->setBody($this->params()->fromPost('body'))
-                    ->setBriefBody($this->params()->fromPost('shortbody'))
-                    ->setCreatedBy("Dean Clow")
-                    ->setDate(date("Y-m-d"))
+                    ->setCreatedBy("Alana Thomas")
+                    ->setDate($date)
                     ->setTitle($this->params()->fromPost('title'))
-                    ->setTitleImage($this->params()->fromPost('titleimage'));
+                    ->setTags($this->params()->fromPost('tags'));
             $model  = $this->getServiceLocator()->get("Application\Service\BlogPost")->insert($model);
             //redirect the user here
             return $this->redirect()->toRoute('blog-post');
@@ -103,11 +100,14 @@ class BlogPostController extends CommonController
                                                 null);
         $model  = $this->getServiceLocator()->get("Application\Service\BlogPost")->fetchById($id);
         if($isSubmitted){
-            //add a new blog entry
+            $date = $this->params()->fromPost("date");
+            $date = new \DateTime($date);
+            $date = $date->format('Y-m-d');
+            //edit a blog entry
             $model  ->setBody($this->params()->fromPost('body'))
-                    ->setBriefBody($this->params()->fromPost('shortbody'))
+                    ->setTags($this->params()->fromPost('tags'))
                     ->setTitle($this->params()->fromPost('title'))
-                    ->setTitleImage($this->params()->fromPost('titleimage'));
+                    ->setDate($date);
             $model  = $this->getServiceLocator()->get("Application\Service\BlogPost")->update($model);
             //redirect the user here
             return $this->redirect()->toRoute('blog-post');
@@ -170,5 +170,23 @@ class BlogPostController extends CommonController
         $model->setDownVotes(($currentVotes+1));
         $result = $this->getServiceLocator()->get("Application\Service\BlogPost")->update($model);
         return $this->redirect()->toRoute('blog-post');
+    }
+    
+    /**
+     * Load a post on the fly (infinite scrolling)
+     * @return void
+     */
+    public function loadPostAction()
+    {
+        $id = $this->params()->fromRoute("id");
+        $posts = $this->getServiceLocator()->get("Application\Service\BlogPost")->fetchAll(null, 'date DESC');
+        $model = $posts[$id];
+        $view = new \Zend\View\Model\ViewModel();
+        $view->setTerminal(true);
+        $view->setVariables(array('body'   => $model->getBody(),
+                                  'nextId' => ($id+1),
+                                  'id'     => $model->getId(),
+                                  'title'  => $model->getTitle()));
+        return $view;
     }
 }

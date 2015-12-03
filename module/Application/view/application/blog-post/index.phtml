@@ -1,79 +1,33 @@
+<script type="text/javascript" src="/js/jscroll.min.js"></script>
 <style>
     img {
         -ms-transform: rotate(0deg); /* IE 9 */
         -webkit-transform: rotate(0deg); /* Chrome, Safari, Opera */
         transform: rotate(0deg);
     }
-    .pagination{height:36px;margin:18px 0;width:100%;}
-    .pagination ul{display:inline-block;*display:inline;*zoom:1;margin-left:0;margin-bottom:0;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;;}
-    .pagination li{display:inline;}
-    .pagination a{float:left;padding:0 14px;line-height:34px;text-decoration:none;border:1px solid #ddd;border-left-width:0;}
-    .pagination a:hover,.pagination .active a{background-color:#f5f5f5;}
-    .pagination .active a{color:#999999;cursor:default;}
-    .pagination .disabled a,.pagination .disabled a:hover{color:#999999;background-color:transparent;cursor:default;}
-    .pagination li:first-child a{border-left-width:1px;-webkit-border-radius:3px 0 0 3px;-moz-border-radius:3px 0 0 3px;border-radius:3px 0 0 3px;}
-    .pagination li:last-child a{-webkit-border-radius:0 3px 3px 0;-moz-border-radius:0 3px 3px 0;border-radius:0 3px 3px 0;}
-    .pagination-centered{text-align:center;}
-    .pagination-right{text-align:right;}
 </style>
 
 <?php
 $hasIdentity = $this->identityHelper();
 if($hasIdentity){
-    print '<a href="/blog-post/add">Add a blog post</a>';
+    print '<a href="/blog-post/add">Add a blog post</a><hr />';
 }
 ?>
 
 <div class="blog_box">
-    <?php
-    
-    $count = 1;
-    foreach($this->posts as $post){
-        print  '<div class="col-sm-5 col-md-6 blog_post">
-                    <ul class="list-inline">
-                        <li class="col-md-12">
-                            <div class="row">';
-        
-        $nextColumnSize = 9;
-        $titleImage = $post['titleImage'];
-        $date = new \DateTime($post['date']);
-        $post['date'] = $date->format('d M Y');
-        if(!empty($titleImage) && strtolower($titleImage)!='no image'){
-            $nextColumnSize = 6;
-            print ' <div class="col-xs-3"><span class="blog_header"><img src="'.$post['titleImage'].'" style="height:100px;width:100px;" alt="" title="" /></span><br/></div>';
+    <div class="scroll" data-ui="jscroll-default">
+        <?php
+        foreach($this->posts as $post){
+            $editLink = "";
+            $hasIdentity = $this->identityHelper();
+            if($hasIdentity){
+                $editLink = '<span style="font-size:11px;">&nbsp;&nbsp;<a href="/blog-post/edit/'.$post['id'].'">Edit</a></span>';
+            }
+            print '<h1>'.$post['title'].$editLink.'</h1>'.$post['body'] . '<hr />';
         }
-                      print '<div class="col-xs-'.$nextColumnSize.'">
-                                <span class="blog_header">'.$post['title'].'</span></div>
-                                <div class="col-xs-3 pull-left">';
-                      
-                      $hasIdentity = $this->identityHelper();
-                      if($hasIdentity){
-                          print '<a class="btn btn-orange" href="/blog-post/edit/'.$post['id'].'" role="button">'.$post['date'].'</a>';
-                      }else{
-                          print '<a class="btn btn-orange" href="/blog-post/show/'.$post['id'].'" role="button">'.$post['date'].'</a>';
-                      }
-                          
-                          print '</div>
-                                <div>    
-                                    <div class="pull-left col-xs-9">
-                                        <a href="/blog-post/up-vote/'.$post['id'].'"><img style="width:12px;height:12px;" src="/img/thumbs_up.ico" /></a> '.$post['upVotes'].'
-                                        &nbsp;&nbsp;<a href="/blog-post/down-vote/'.$post['id'].'"><img style="width:12px;height:12px;" src="/img/thumbs_down.ico" /></a> '.$post['downVotes'].'
-                                    </div>
-                                    <div class="pull-left col-xs-9">
-                                        '.strip_tags($post['briefBody']).'...
-                                    </div>
-                                </div>
-                             </div>
-                        </li>
-                    </ul>
-                </div> <!-- /.blog_post 1 -->';
-        if($count%2==0){
-            print '<div class="templatemo_clear"></div>';
-        }
-        $count++;
-    }
-            
-    ?>
+        ?>
+        <div class="next"><a href="/blog-post/load-post/5">next</a></div>
+    </div>
 </div>
 
 <script type="text/javascript">
@@ -82,9 +36,8 @@ $(document).ready(function() {
        $(".nav li").attr("class", "");  
        $("#blogNav").attr("class", "active"); 
     }, 0);
+    $('.scroll').jscroll({
+        loadingHtml: '<div style="width:100%;text-align:center;"><img src="/img/loading_spinner.gif" style="width:75px;" alt="Loading" /></div>'
+    });
 });
 </script>
-
-<?php
-echo $this->paginationControl($this->posts, 'Sliding', 'paginator-slide', array('route' => 'blog-post'));
-?>

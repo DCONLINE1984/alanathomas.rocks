@@ -14,7 +14,7 @@
 return array(
    'db' => array(
       'driver'         => 'PDO',
-      'dsn'            => 'mysql:dbname=deanclowlocal;host=127.0.0.1',
+      'dsn'            => 'mysql:dbname=alanathomaslocal;host=127.0.0.1',
    ),
    'service_manager' => array(
       'factories' => array(

@@ -1,0 +1,11 @@
+<?php
+
+$editLink = "";
+$hasIdentity = $this->identityHelper();
+if($hasIdentity){
+    $editLink = '<span style="font-size:11px;">&nbsp;&nbsp;<a href="/blog-post/edit/'.$this->id.'">Edit</a></span>';
+}
+print '<h1>' . $this->title . $editLink . '</h1>';
+print $this->body;
+print '<div class="next"><a href="/blog-post/load-post/'.$this->nextId.'">next</a></div>';
+print '<hr />';
